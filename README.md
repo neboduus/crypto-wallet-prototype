@@ -1,2 +1,2 @@
 # crypto-wallet-prototype
-A prototype for a Cryptocurrencies Wallet
+This project contains a Scala Play application prototype for a Cryptocurrencies Wallet. 
