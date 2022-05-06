@@ -1,0 +1,37 @@
+@(address: models.Address, transactionsBatch: models.TransactionsBatch, offset: Long)
+
+@main("Welcome to Play") {
+  <h1>Transactions Page:</h1>
+
+  <h3>Listing @transactionsBatch.transactions.size transactions of address @address.address</h3>
+  <h4>Total transactions: @transactionsBatch.totalRows</h4>
+
+
+  <table>
+    <tr>
+      <th>Hash</th>
+      <th>Input USD</th>
+      <th>Output USD</th>
+    </tr>
+    @for(transaction <- transactionsBatch.transactions){
+      <tr>
+        <td>@transaction.hash</td>
+        <td>@transaction.inputUsd</td>
+        <td>@transaction.outputUsd</td>
+      </tr>
+    }
+  </table>
+
+  @if(offset > 0){
+    @helper.form(action=routes.HomeController.transactions(address.address, (offset-transactionsBatch.transactions.size.toLong).toString)){
+      <input type="submit" value="<<< Previous 50 transactions" />
+    }
+  }
+
+  @if(offset < transactionsBatch.totalRows){
+    @helper.form(action=routes.HomeController.transactions(address.address, (offset+transactionsBatch.transactions.size.toLong).toString)){
+      <input type="submit" value="Next 50 transactions >>>" />
+    }
+  }
+  
+}

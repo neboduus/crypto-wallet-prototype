@@ -1,0 +1,44 @@
+@(addresses: List[models.Address])
+
+@main("Welcome to Play") {
+  <h1>Welcome to your wallet!</h1>
+  <br>
+  <h3>Addresses list:</h3>
+
+  <a href="#" class="sync-balances" style="color:green"> Sync Balances </a>
+  <table>
+    <tr>
+      <th>Address</th>
+      <th>Balance</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    @for(address <- addresses){
+      <tr>
+        <td>@address.address</td>
+        <td>@address.balance.getOrElse("Unknown")</td>
+        <td>
+          @helper.form(action=routes.HomeController.transactions(address.address, "0")){
+          <input type="submit" value="List Transactions" />
+        }
+        </td>
+        <td><a href="#" class="delete-address" style="color:red" data-id="@address.address"> Delete Address</a></td>
+      </tr>
+    }
+  </table>
+
+  </table>
+
+  <h3>Add new address:</h3>
+
+  <table>
+    <tr>
+      <td>Address</td>
+    </tr>
+    <tr>
+      <td><input type="text" id="new-address" /></td>
+    </tr>
+  </table>
+  <a href="#" class="add-address" style="color:green"> Add </a>
+}
